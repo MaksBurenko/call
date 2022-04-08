@@ -1,4 +1,8 @@
 package call;
+
+import java.io.IOException;
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -20,15 +24,15 @@ public class Main {
         System.out.println(getCallerClassAndMethodName());
     }
     public static void method4() {
+        //не вызывает ничего
         System.out.println(getCallerClassAndMethodName());
     }
     public static String getCallerClassAndMethodName() {
         StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-        if (ste.length < 3) {
-            return null;
-        }
-        for (StackTraceElement temp:ste) {
-            return (temp.getClassName() + " " + temp.getMethodName());
-        }
+           try {
+               return (ste[3].getClassName() + "#" + ste[3].getMethodName());
+           } catch (ArrayIndexOutOfBoundsException e) {
+               return null;
+           }
     }
 }
